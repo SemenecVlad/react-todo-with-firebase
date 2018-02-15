@@ -1,0 +1,45 @@
+.App {
+  text-align: center;
+}
+
+a {
+  padding: 20px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  background: gray;
+  margin-bottom: 40px;
+}
+nav {
+  display: flex;
+}
+nav a {
+  padding: 20px 30px;
+  color: white;
+}
+.todo-form {
+  width: 400px;
+  margin: 0 auto;
+}
+
+.list li {
+  width: 100%;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.add-todo-form {
+  margin: 0 auto;
+}
+
+.login-form input {
+  margin-top: 10px;
+}
+
+.login-form button {
+  margin-top: 20px;
+}
