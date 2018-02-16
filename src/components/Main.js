@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import TodoList from "./TodoList";
 import LogIn from "./auth/LogIn";
 import Register from "./auth/Register";
+import Home from "./Home";
 
 class Main extends Component {
   render() {
@@ -12,6 +13,7 @@ class Main extends Component {
           <div className="col-md-4" />
           <div className="col-md-4">
             <Switch>
+              <Route exact path="/" component={Home} />
               <Route path="/todo" component={TodoList} />
               <Route path="/login" component={LogIn} />
               <Route path="/register" component={Register} />

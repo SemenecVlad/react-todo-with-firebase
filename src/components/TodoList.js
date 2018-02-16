@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
+import _ from "lodash";
 import * as actions from "../actions";
 
 import List from "./List";
@@ -18,8 +19,12 @@ class TodoList extends Component {
   deleteItem = key => {
     this.props.deleteTask(key);
   };
+  componentWillMount() {
+    this.props.fetchTasks();
+    // console.log(this.props.fetchTasks());
+  }
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, pristine, submitting } = this.props;
     return (
       <div className="todo-list">
         <div className="todo-form">
@@ -35,7 +40,11 @@ class TodoList extends Component {
                 placeholder="Write your todo here..."
                 type="text"
               />
-              <button className="btn btn-success mb-2" type="submit">
+              <button
+                disabled={pristine || submitting}
+                className="btn btn-success mb-2 ml-3"
+                type="submit"
+              >
                 Add Todo
               </button>
             </div>
@@ -48,10 +57,11 @@ class TodoList extends Component {
 }
 
 const mapStateToProps = state => {
-  return {
-    todos: state.todos
-    // form: state.form.todo.todo_text
-  };
+  const todos = _.map(state.list, (val, uid) => {
+    return { ...val, uid };
+  });
+
+  return { todos };
 };
 
 TodoList = reduxForm({

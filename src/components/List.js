@@ -6,12 +6,12 @@ class List extends Component {
     this.deleteItem = this.props.deleteItem.bind(this);
   }
   renderList = todos => {
-    return this.props.todos.list.map(item => {
+    return this.props.todos.map(item => {
       return (
-        <li key={item.key}>
+        <li key={item.uid} data-id={item.key}>
           <span>{item.todo_text}</span>
           <button
-            onClick={() => this.deleteItem(item.key)}
+            onClick={() => this.deleteItem(item.uid)}
             className="btn btn-sm btn-danger"
           >
             Delete

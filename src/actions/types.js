@@ -5,3 +5,4 @@ export const UNAUTH_USER = "unauth_user";
 export const AUTH_ERROR = "auth_error";
 export const AUTH_USER_GOOGLE = "auth_user_google";
 export const USER_CREATED = "user_created";
+export const TODOS_FETCH_SUCCESS = "todos_fetch_success";

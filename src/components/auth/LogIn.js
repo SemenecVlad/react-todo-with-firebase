@@ -27,15 +27,15 @@ class LogIn extends Component {
     this.props.signInWithGoogle();
   };
 
-  renderError() {
-    if (this.props.error) {
+  renderError = () => {
+    if (this.props.errorMessage) {
       return (
         <div className="alert alert-danger">{this.props.errorMessage}</div>
       );
     }
-  }
+  };
   render() {
-    const { handleSubmit, pristine, submitting } = this.props;
+    const { handleSubmit, pristine, submitting, error } = this.props;
     return (
       <div className="login-form">
         <h1>Login</h1>
@@ -65,7 +65,11 @@ class LogIn extends Component {
           </button>
         </form>
         <p className="text-center">or</p>
-        <a href="#" onClick={this.handleSubmitGoogle}>
+        <a
+          href="#"
+          className="btn btn-danger mb-3"
+          onClick={this.handleSubmitGoogle}
+        >
           Sign In with Google
         </a>
         <Link className="btn btn-block btn-primary" to="/register">

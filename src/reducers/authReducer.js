@@ -9,7 +9,7 @@ import {
 const INITIAL_STATE = {
   loggedIn: false,
   token: localStorage.getItem("token") ? localStorage.getItem("token") : "",
-  error: "oops"
+  error: ""
 };
 
 export default function(state = INITIAL_STATE, action) {

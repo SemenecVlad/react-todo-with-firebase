@@ -21,8 +21,12 @@ nav a {
   color: white;
 }
 .todo-form {
-  width: 400px;
+  width: 100%;
   margin: 0 auto;
+}
+
+.list {
+  padding: 0;
 }
 
 .list li {
@@ -33,6 +37,8 @@ nav a {
   margin-top: 10px;
 }
 .add-todo-form {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
   margin: 0 auto;
 }
 

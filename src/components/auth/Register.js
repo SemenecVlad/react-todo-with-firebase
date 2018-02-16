@@ -3,6 +3,7 @@ import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import * as actions from "../../actions";
+import { renderField } from "./renderField";
 
 class Register extends Component {
   handleCreateAccount = ({ email, password }) => {
@@ -18,22 +19,25 @@ class Register extends Component {
         <form onSubmit={handleSubmit(this.handleCreateAccount)}>
           <Field
             name="email"
+            label="Email"
             placeholder="Enter your email..."
-            component="input"
+            component={renderField}
             type="text"
             className="form-control"
           />
           <Field
             name="password"
+            label="Password"
             placeholder="Enter your password..."
-            component="input"
+            component={renderField}
             type="password"
             className="form-control"
           />
           <Field
             name="conf-password"
+            label="Confirm password"
             placeholder="Confirm your password..."
-            component="input"
+            component={renderField}
             type="password"
             className="form-control"
           />

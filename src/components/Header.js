@@ -25,7 +25,7 @@ class Header extends Component {
   render() {
     return (
       <header>
-        <h1>LOGO</h1>
+        <Link to="/">LOGO</Link>
         <nav>{this.renderButtons()}</nav>
       </header>
     );
