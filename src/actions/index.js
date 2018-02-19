@@ -4,10 +4,12 @@ import {
   DELETE_TASK,
   AUTH_USER,
   AUTH_ERROR,
+  AUTH_ERROR_CLEAR,
   UNAUTH_USER,
   AUTH_USER_GOOGLE,
   USER_CREATED,
-  TODOS_FETCH_SUCCESS
+  TODOS_FETCH_SUCCESS,
+  TASK_COMPLETED
 } from "./types";
 import { reset } from "redux-form";
 import { history } from "../index";
@@ -47,9 +49,11 @@ export function loginUser({ email, password }) {
 }
 
 export function authError(error) {
-  return {
-    type: AUTH_ERROR,
-    payload: error
+  return dispatch => {
+    dispatch({
+      type: AUTH_ERROR,
+      payload: error
+    });
   };
 }
 
@@ -62,6 +66,9 @@ export function signInWithGoogle() {
       .auth()
       .signInWithPopup(provider)
       .then(function(result) {
+        this.setState({
+          loading: false
+        });
         // This gives you a Google Access Token.
         var token = result.credential.accessToken;
         localStorage.setItem("uid", result.user.uid), console.log(result);
@@ -95,20 +102,29 @@ export function logOut() {
 export function addTask({ todo_text }) {
   const { currentUser } = firebase.auth();
   return function(dispatch) {
-    // dispatch(
-    //   {
-    //     type: ADD_TASK,
-    //     payload: todo_text
-    //   },
-    //   dispatch(reset("todo"))
-    // );
     firebase
       .database()
       .ref(`/users/${currentUser.uid}/todos`)
-      .push({ todo_text })
+      .push({
+        task: todo_text,
+        date: new Date().toLocaleDateString(),
+        time: new Date().toLocaleTimeString(),
+        completed: false
+      })
       .then(() => {
         dispatch({ type: ADD_TASK });
       }, dispatch(reset("todo")));
+  };
+}
+
+export function completedTask(key, val) {
+  const { currentUser } = firebase.auth();
+  return function(dispatch) {
+    firebase
+      .database()
+      .ref(`/users/${currentUser.uid}/todos/${key}`)
+      // .child("completed")
+      .update({ completed: !val }, () => dispatch({ type: TASK_COMPLETED }));
   };
 }
 
@@ -118,6 +134,7 @@ export const fetchTasks = () => {
     firebase
       .database()
       .ref(`/users/${localStorage.getItem("uid")}/todos`)
+      .orderByKey()
       .on("value", snapshot => {
         dispatch({
           type: TODOS_FETCH_SUCCESS,

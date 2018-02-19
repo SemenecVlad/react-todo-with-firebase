@@ -1,5 +1,9 @@
 .App {
   text-align: center;
+  margin-top: 120px;
+}
+
+#root {
 }
 
 a {
@@ -34,12 +38,15 @@ nav a {
   list-style-type: none;
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  margin: 0;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
 }
 .add-todo-form {
   margin-left: 0 !important;
   margin-right: 0 !important;
   margin: 0 auto;
+  margin-bottom: 20px !important;
 }
 
 .login-form input {
@@ -48,4 +55,71 @@ nav a {
 
 .login-form button {
   margin-top: 20px;
+}
+
+.task-content {
+  padding: 10px 20px;
+}
+
+.task-completed {
+  text-decoration: line-through;
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+.list-item {
+  display: flex;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.list-item p {
+  word-break: break-all;
+}
+
+.list-item button {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.listItem-enter {
+  opacity: 0.01;
+  display: block;
+  transform: translateX(-200px);
+}
+
+.listItem-enter.listItem-enter-active {
+  display: block;
+  opacity: 1;
+  transform: translateX(0px);
+  transition: all 0.3s ease-in;
+}
+
+.listItem-leave {
+  display: block;
+  transform: translateX(0px);
+  opacity: 1;
+  transition: all 500ms ease-in;
+}
+
+.listItem-leave.listItem-leave-active {
+  display: block;
+  opacity: 0.01;
+  transform: translateX(200px);
+  transition: all 500ms ease-out;
+}
+
+.listItem-appear {
+  opacity: 0.01;
+}
+
+.listItem-appear.listItem-appear-active {
+  opacity: 1;
+  transition: opacity 0.5s ease-in;
 }

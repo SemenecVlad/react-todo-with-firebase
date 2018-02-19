@@ -19,6 +19,11 @@ class TodoList extends Component {
   deleteItem = key => {
     this.props.deleteTask(key);
   };
+
+  completedTask = (key, val) => {
+    this.props.completedTask(key, val);
+    console.log(key, val);
+  };
   componentWillMount() {
     this.props.fetchTasks();
     // console.log(this.props.fetchTasks());
@@ -49,7 +54,11 @@ class TodoList extends Component {
               </button>
             </div>
           </form>
-          <List deleteItem={this.deleteItem} todos={this.props.todos} />
+          <List
+            completedTask={this.completedTask}
+            deleteItem={this.deleteItem}
+            todos={this.props.todos}
+          />
         </div>
       </div>
     );

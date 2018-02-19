@@ -1,6 +1,7 @@
 import {
   AUTH_USER,
   AUTH_ERROR,
+  AUTH_ERROR_CLEAR,
   UNAUTH_USER,
   AUTH_USER_GOOGLE,
   USER_CREATED
@@ -22,6 +23,8 @@ export default function(state = INITIAL_STATE, action) {
       return { ...state, loggedIn: true, token: action.payload };
     case AUTH_ERROR:
       return { ...state, error: action.payload };
+    case AUTH_ERROR_CLEAR:
+      return { ...state, error: "" };
     case USER_CREATED:
       return { ...state, loggedIn: true, token: action.payload };
     default:

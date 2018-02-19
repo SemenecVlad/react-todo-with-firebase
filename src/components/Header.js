@@ -24,9 +24,17 @@ class Header extends Component {
   }
   render() {
     return (
-      <header>
-        <Link to="/">LOGO</Link>
-        <nav>{this.renderButtons()}</nav>
+      <header
+        className={
+          this.props.token === ""
+            ? "navbar navbar-expand-md navbar-dark fixed-top bg-primary"
+            : "navbar navbar-expand-md navbar-dark fixed-top bg-secondary"
+        }
+      >
+        <Link to="/" className="navbar-brand">
+          Your Personal Helper
+        </Link>
+        <nav className="navbar-nav ml-auto">{this.renderButtons()}</nav>
       </header>
     );
   }

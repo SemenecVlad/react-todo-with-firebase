@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { BounceLoader } from "react-spinners";
 import * as actions from "../../actions";
 import { renderField } from "./renderField";
 
@@ -18,9 +19,14 @@ const validate = values => {
 
 class LogIn extends Component {
   handleLogin = ({ email, password }) => {
-    console.log("submited");
-    this.props.loginUser({ email, password });
-    console.log(email, password);
+    this.setState({ loading: true }, () => {
+      console.log("submited");
+      this.props.loginUser({ email, password });
+      // console.log(email, password);
+      // .then(result =>
+
+      // );
+    });
   };
 
   handleSubmitGoogle = () => {
@@ -33,6 +39,10 @@ class LogIn extends Component {
         <div className="alert alert-danger">{this.props.errorMessage}</div>
       );
     }
+  };
+
+  state = {
+    loading: false
   };
   render() {
     const { handleSubmit, pristine, submitting, error } = this.props;
@@ -56,13 +66,23 @@ class LogIn extends Component {
           />
           {this.renderError()}
 
-          <button
-            className="btn btn-success btn-block"
-            type="submit"
-            disabled={pristine || submitting}
-          >
-            Submit
-          </button>
+          {this.state.loading ? (
+            <span className="btn btn-link">
+              <BounceLoader
+                color={"#039EFF"}
+                size={40}
+                loading={this.state.loading}
+              />
+            </span>
+          ) : (
+            <button
+              className="btn btn-success btn-block"
+              type="submit"
+              disabled={pristine || submitting}
+            >
+              Log In
+            </button>
+          )}
         </form>
         <p className="text-center">or</p>
         <a
