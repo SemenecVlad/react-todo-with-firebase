@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import _ from "lodash";
+import { BounceLoader } from "react-spinners";
 import * as actions from "../actions";
 
 import List from "./List";
@@ -11,6 +12,11 @@ class TodoList extends Component {
     super(props);
     this.handleTodos = this.handleTodos.bind(this);
   }
+
+  state = {
+    loading: false
+  };
+
   handleTodos({ todo_text }) {
     console.log(todo_text);
     this.props.addTask({ todo_text });
@@ -25,7 +31,9 @@ class TodoList extends Component {
     console.log(key, val);
   };
   componentWillMount() {
+    // this.setState({ loading: true }, () => {
     this.props.fetchTasks();
+    // });
     // console.log(this.props.fetchTasks());
   }
   render() {
@@ -54,11 +62,21 @@ class TodoList extends Component {
               </button>
             </div>
           </form>
-          <List
-            completedTask={this.completedTask}
-            deleteItem={this.deleteItem}
-            todos={this.props.todos}
-          />
+          {this.props.loading ? (
+            <span className="btn btn-link">
+              <BounceLoader
+                color={"#89ABAC"}
+                size={60}
+                loading={this.props.loading}
+              />
+            </span>
+          ) : (
+            <List
+              completedTask={this.completedTask}
+              deleteItem={this.deleteItem}
+              todos={this.props.todos}
+            />
+          )}
         </div>
       </div>
     );
@@ -66,11 +84,11 @@ class TodoList extends Component {
 }
 
 const mapStateToProps = state => {
-  const todos = _.map(state.list, (val, uid) => {
+  const todos = _.map(state.list.todos, (val, uid) => {
     return { ...val, uid };
   });
 
-  return { todos };
+  return { todos, loading: state.list.loading };
 };
 
 TodoList = reduxForm({

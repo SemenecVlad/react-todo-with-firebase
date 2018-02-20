@@ -20,17 +20,14 @@ const validate = values => {
 class LogIn extends Component {
   handleLogin = ({ email, password }) => {
     this.setState({ loading: true }, () => {
-      console.log("submited");
       this.props.loginUser({ email, password });
-      // console.log(email, password);
-      // .then(result =>
-
-      // );
     });
   };
 
   handleSubmitGoogle = () => {
-    this.props.signInWithGoogle();
+    this.setState({ loading: true }, () => {
+      this.props.signInWithGoogle();
+    });
   };
 
   renderError = () => {

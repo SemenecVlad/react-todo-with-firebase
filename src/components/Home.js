@@ -20,8 +20,8 @@ class Home extends Component {
   render() {
     return (
       <div className="home">
-        <h1>Create Your Personal To-Do list</h1>
-        <p>
+        <h1 style={styles.title}>Create Your Personal To-Do list</h1>
+        <p style={styles.home}>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum
           corrupti fuga nobis molestias, pariatur aut? Debitis voluptatem, vero
           et a sapiente vitae, reprehenderit sit nostrum modi, rerum quis soluta
@@ -32,5 +32,15 @@ class Home extends Component {
     );
   }
 }
+
+const styles = {
+  title: {
+    fontSize: 55,
+    color: "blue"
+  },
+  home: {
+    fontWeight: "bold"
+  }
+};
 
 export default Home;

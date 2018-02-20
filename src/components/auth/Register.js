@@ -2,17 +2,20 @@ import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { BounceLoader } from "react-spinners";
 import * as actions from "../../actions";
 import { renderField } from "./renderField";
 
 class Register extends Component {
-  handleCreateAccount = ({ email, password }) => {
+  handleCreateAccount = ({ email, password, conf_password }) => {
     console.log("submited");
-    this.props.registerUser({ email, password });
-    this.forceUpdate();
+    // this.setState({ loading: true }, () => {
+    this.props.registerUser({ email, password, conf_password });
+    // this.forceUpdate();
+    // });
   };
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, pristine, submitting } = this.props;
     return (
       <div className="login-form">
         <h1>Register</h1>
@@ -34,16 +37,30 @@ class Register extends Component {
             className="form-control"
           />
           <Field
-            name="conf-password"
+            name="conf_password"
             label="Confirm password"
             placeholder="Confirm your password..."
             component={renderField}
             type="password"
             className="form-control"
           />
-          <button className="btn btn-success btn-block" type="submit">
-            Submit
-          </button>
+          {this.props.loading ? (
+            <span className="btn btn-link">
+              <BounceLoader
+                color={"#039EFF"}
+                size={40}
+                loading={this.props.loading}
+              />
+            </span>
+          ) : (
+            <button
+              className="btn btn-success btn-block"
+              type="submit"
+              disabled={pristine || submitting}
+            >
+              Create Account
+            </button>
+          )}
         </form>
         <p className="text-center">or</p>
         <Link className="btn btn-block btn-primary" to="/login">
@@ -53,6 +70,12 @@ class Register extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    loading: state.auth.loading
+  };
+};
 
 Register = reduxForm({
   form: "register"
