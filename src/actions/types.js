@@ -11,3 +11,4 @@ export const TODOS_FETCH_SUCCESS = "todos_fetch_success";
 export const TASK_COMPLETED = "task_completed";
 export const REQUEST_TASKS = "request_tasks";
 export const IMAGE_UPLOADED = "image_uploaded";
+export const IMAGE_UPDATED = "image_updated";

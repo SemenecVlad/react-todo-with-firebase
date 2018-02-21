@@ -12,7 +12,8 @@ import {
   TODOS_FETCH_SUCCESS,
   TASK_COMPLETED,
   REQUEST_TASKS,
-  IMAGE_UPLOADED
+  IMAGE_UPLOADED,
+  IMAGE_UPDATED
 } from "./types";
 import { reset } from "redux-form";
 import { history } from "../index";
@@ -179,19 +180,56 @@ export const uploadImage = files => {
       .storage()
       .ref(`/users/${localStorage.getItem("uid")}/profile.jpg`)
       .put(files[0]);
-    uploadTask.on(
-      "state_changed", // or 'state_changed'
-      function(snapshot) {
-        var downloadURL = uploadTask.snapshot.downloadURL;
-        console.log(downloadURL);
-        localStorage.setItem("imageURL", downloadURL);
-      },
-      function() {
-        return dispatch({
-          type: IMAGE_UPLOADED
-        });
-      }
-    );
+    uploadTask
+      // .then(
+      //   dispatch({
+      //     type: IMAGE_UPLOADED,
+      //     payload: "image uploaded"
+      //   })
+      // );
+      // const imageRef = firebase
+      //   .storage()
+      //   .ref(`/users/${localStorage.getItem("uid")}/profile.jpg`);
+      // imageRef.getDownloadURL().then(url => {
+      //   localStorage.setItem("imageURL", url);
+      //   console.log(url);
+      // });
+
+      .then(
+        // "state_changed", // or 'state_changed'
+        function(snapshot) {
+          var downloadURL = snapshot.downloadURL;
+          console.log(downloadURL);
+          localStorage.setItem("imageURL", downloadURL);
+          dispatch({
+            type: IMAGE_UPLOADED,
+            payload: downloadURL,
+            updated: true
+          });
+          window.location.reload();
+        }
+      );
+  };
+};
+
+export const getImageURL = () => {
+  return dispatch => {
+    let storageRef = firebase.storage();
+    let downloadLink = storageRef
+      .ref(`/users/${localStorage.getItem("uid")}/profile.jpg`)
+      .getDownloadURL()
+      .then(url => {
+        // localStorage.setItem("");
+        let profileImage = document.getElementById("profile");
+        profileImage.src = url;
+      })
+      .then(
+        dispatch({
+          type: IMAGE_UPDATED,
+          payload: false
+        })
+      );
+    // console.log("getImageURL ", downloadLink);
   };
 };
 

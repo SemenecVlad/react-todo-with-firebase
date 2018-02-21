@@ -1,46 +1,47 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-// import { Field, reduxForm } from "redux-form";
 import Dropzone from "react-dropzone";
 import * as actions from "../actions";
 
 class ProfileImage extends Component {
+  componentWillMount() {
+    // this.props.getImageURL();
+  }
   uploadPicture = file => {
     this.props.uploadImage(file);
-    console.log("uploaded");
+    this.forceUpdate();
   };
-  render() {
-    // const { handleSubmit } = this.props;
+  getURL() {
+    return this.props.getImageURL();
+  }
 
+  render() {
+    // let image = this.getURL();
     return (
       <div>
-        <img
-          src={localStorage.getItem("imageURL")}
-          className="img-thumbnail"
-          alt=""
-        />
-        {/* <form action="" onSubmit={handleSubmit(this.uploadPicture)}>
-          <Field
-            name="file"
-            component="input"
-            className="form-control"
-            type="file"
-          />
-          <button className="btn btn-success" type="submit">
-            Change Image
-          </button>
-        </form> */}
-        <Dropzone onDrop={this.uploadPicture} />
-        <h4>{localStorage.getItem("userName")}</h4>
+        {this.props.token === "" || this.props.token === undefined ? (
+          <span />
+        ) : (
+          <div>
+            <img
+              id="profile"
+              src={this.getURL()}
+              className="img-thumbnail"
+              alt=""
+            />
+            <Dropzone onDrop={this.uploadPicture} />
+            <h4>{localStorage.getItem("userName")}</h4>
+          </div>
+        )}
       </div>
     );
   }
 }
 
-// ProfileImage = reduxForm({
-//   form: "profile_image"
-// })(ProfileImage);
+const mapStateToProps = state => {
+  return {
+    token: state.auth.token
+  };
+};
 
-// ProfileImage =
-
-export default connect(null, actions)(ProfileImage);
+export default connect(mapStateToProps, actions)(ProfileImage);

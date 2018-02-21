@@ -2,7 +2,8 @@ import {
   TODOS_FETCH_SUCCESS,
   TASK_COMPLETED,
   REQUEST_TASKS,
-  IMAGE_UPLOADED
+  IMAGE_UPLOADED,
+  IMAGE_UPDATED
 } from "../actions/types";
 
 export default function(state = [], action) {
@@ -14,7 +15,9 @@ export default function(state = [], action) {
     case TASK_COMPLETED:
       return state;
     case IMAGE_UPLOADED:
-      return state;
+      return { ...state, uploaded: action.payload, updatedImg: action.updated };
+    case IMAGE_UPDATED:
+      return { ...state, updatedImg: action.payload };
     default:
       return state;
   }
